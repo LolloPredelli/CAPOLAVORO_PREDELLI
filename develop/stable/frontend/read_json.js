@@ -100,13 +100,6 @@ function renderNode(node, parentX, parentY, x, y, label = null) {
 
 
 
-
-// Aggiungi eventi al pulsante
-addButton.addEventListener('click', function () {
-    addSpan("span");
-});
-
-
 // funzione per aggiunhgere uno span all'array spans
 function addSpan(element) {
     const span = document.createElement('span');

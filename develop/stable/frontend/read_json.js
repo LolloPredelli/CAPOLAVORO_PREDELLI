@@ -6,11 +6,6 @@ const container = document.getElementById('spanContainer');
 const addButton = document.getElementById('add-button');
 const spanTitle = document.getElementById('span-title');
 const svgContainer = document.getElementById('svgContainer');
-const button = document.querySelector('button');
-
-button.addEventListener('click', function () {
-    addSpan();
-})
 
 // Posiziona `spanTitle` e carica il JSON al caricamento della pagina
 window.onload = () => {
@@ -44,102 +39,87 @@ function showJSON(file) {
     if (file.title) {
         spanTitle.innerHTML = `<h1>${file.title}</h1>`;
     } else {
+        console.warn("No title found in JSON file");
         spanTitle.innerHTML = "<h1>No Title</h1>";
     }
 
+
+
+    const angle_step = findAngle(file.branches.length);
     const centerX = container.offsetWidth / 2;
     const centerY = container.offsetHeight / 2;
+    const initial_distance = 200
 
-    const angleStep = (2 * Math.PI) / file.branches.length;
-    let angle = 0;
-
-    for (let branch of file.branches) {
-        const x = centerX + 300 * Math.cos(angle);
-        const y = centerY + 300 * Math.sin(angle);
-        renderNode(branch, centerX, centerY, x, y);
-        angle += angleStep;
+    let angle = angle_step
+    for (i = 0; i < file.branches.length; i++) {
+        buildBranch(centerX, centerY, angle, initial_distance, file.branches[i], angle);
+        angle = angle + angle_step;
     }
+
+
 }
 
+function buildBranch(parentX, parentY, angle, distance, element, source_angle = null) {
+    if (!element || !element.value) return;
 
-function renderNode(node, parentX, parentY, x, y, label = null) {
-    const span = document.createElement("span");
-    span.className = "span-item";
-    span.style.left = x + "px";
-    span.style.top = y + "px";
-    span.innerHTML = `<p>${node.value || "(vuoto)"}</p>`;
-    container.appendChild(span);
+    const x = findXCatet(angle, distance);
+    const y = findYCatet(angle, distance);
 
-    // Linea padre -> figlio
-    drawLine(parentX, parentY, x, y);
+    let span = null
+    span = document.createElement('span');
+    span.innerHTML = `<p>${element.value}</p>`;
+    span.classList.add('span-item');
+    if (element.type == 'LINK') {
+        span.classList.add('link');
+        container.appendChild(span);
+        const spanX = parentX + (x / 2);
+        const spanY = parentY + (y / 2);
+        span.style.left = spanX + "px";
+        span.style.top = spanY + "px";
 
-    // Etichetta della connessione (es. "nsubj", "prep", ecc.)
-    if (label) {
-        const labelElement = document.createElement("div");
-        labelElement.className = "line-label";
-        labelElement.innerText = label;
-        labelElement.style.left = (parentX + x) / 2 + "px";
-        labelElement.style.top = (parentY + y) / 2 + "px";
-        container.appendChild(labelElement);
-    }
+        if (Array.isArray(element.children)) {
+            element.children.forEach((child, index) => {
+                buildBranch(parentX, parentY, angle, distance, child);
+            });
+        }
 
-    // Calcolo posizione figli
-    if (node.children && node.children.length > 0) {
-        const childAngleStep = (Math.PI * 2) / node.children.length;
-        let childAngle = 0;
-        for (let child of node.children) {
-            if (!child.value) continue; // ignora oggetti vuoti
-            const childX = x + 200 * Math.cos(childAngle);
-            const childY = y + 200 * Math.sin(childAngle);
-            renderNode(child, x, y, childX, childY, child.dep);
-            childAngle += childAngleStep;
+    } else {
+        span.classList.add('block');
+        container.appendChild(span);
+        const spanX = parentX + x;
+        const spanY = parentY + y;
+        span.style.left = spanX + "px";
+        span.style.top = spanY + "px";
+        drawLine(parentX, parentY, spanX, spanY);
+
+        if (Array.isArray(element.children)) {
+            const count = element.children.length;
+            const spread = Math.PI / 2; // angolo piano
+            const baseAngle = angle - spread / 2; // angolo piano rispetto all'elemento padre
+            const angleStep = ((baseAngle + spread) / (count + 1))
+
+            element.children.forEach((child, index) => {
+                const nextAngle = baseAngle + index * angleStep;
+                buildBranch(spanX, spanY, nextAngle, distance * 0.95, child);
+            });
         }
     }
 }
 
+function fix_contacts() {
+    const spans = document.querySelectorAll('span');
 
+    spans.forEach((current_span) => {
+        spans.forEach((span) => {
+            while (current_span.style.left <= (span.style.right + 5) && current_span.style.left >= span.style.left) {
+                current_span.style.left++;
+            }
 
-
-// funzione per aggiunhgere uno span all'array spans
-function addSpan(element) {
-    const span = document.createElement('span');
-    span.innerHTML = `<p>${element.value}</p>`;
-    span.classList.add('span-item');
-    container.appendChild(span);
-    positionateSpan();
-}
-
-// calcola le posizioni degli span
-function positionateSpan() {
-    const spanItems = document.querySelectorAll('.span-item');
-    svgContainer.innerHTML = ""; // Pulisce le linee esistenti
-
-    let angleDifference = findAngle(spanItems.length);
-    let spanAngle = 0;
-
-    for (let i = 0; i < spanItems.length; i++) {
-        // Centro della pagina
-        const centerX = container.offsetWidth / 2;
-        const centerY = container.offsetHeight / 2;
-
-        // Calcolo delle posizioni
-        let xFromCenter = findXCatet(spanAngle, 300);
-        let yFromCenter = findYCatet(spanAngle, 300);
-
-        // Posizionamento dello span
-        spanItems[i].style.left = centerX + xFromCenter + "px";
-        spanItems[i].style.top = centerY + yFromCenter + "px";
-
-        // Coordinate dello span
-        const spanX = centerX + xFromCenter;
-        const spanY = centerY + yFromCenter;
-
-        // Disegna una linea tra il titolo e lo span
-        drawLine(centerX, centerY, spanX, spanY);
-
-        // Aggiorna l'angolo
-        spanAngle += angleDifference;
-    }
+            while (current_span.style.bottom <= (span.style.top + 5) && current_span.style.bottm >= span.style.bottom) {
+                current_span.style.bottom++;
+            }
+        })
+    })
 }
 
 
@@ -175,3 +155,4 @@ function drawLine(x1, y1, x2, y2) {
     line.setAttribute("stroke-width", "2");
     svgContainer.appendChild(line);
 }
+

@@ -340,15 +340,15 @@ def build_elements(doc, current_index, element_array, type_array):
 # Return the elements' tree structure
 def link_elements_as_tree(doc, element_array, type_array, root_index, subject_index):
 
-    # Collega ROOT al soggetto
+    # Link ROOT to the subject
     if root_index in element_array and subject_index in element_array:
         element_array[root_index].link = element_array[subject_index]
         element_array[subject_index].add_child(element_array[root_index])
 
-    # Collega tutti gli altri elementi secondo il loro head
+    # Link all other elements according to their head
     for i, elem in element_array.items():
         if elem.id == root_index:
-            continue  # Salta ROOT, già collegato
+            continue  # Skip ROOT since it is already linked
         head_index = find_head_with_type(doc[i], type_array)
         if head_index in element_array:
             elem.link = element_array[head_index]
@@ -362,15 +362,16 @@ def link_elements_as_tree(doc, element_array, type_array, root_index, subject_in
 # Return the json structure of an element tree
 def element_tree_to_json(doc, element, visited=None):
     if visited is None:
-        visited = set()  # inizializza l'insieme dei nodi visitati
+        visited = set()  # set of nodes already visited
 
-    # Se l'elemento è già stato visitato, interrompi la ricorsione
+    # If elements was already visited then skip
     if element.id in visited:
         return {}
 
-    # Aggiungi l'elemento alla lista dei visitati
+    # Add element to visited set
     visited.add(element.id)
 
+    # Return JSON structure    
     return {
         "type": element.type,
         "value": element.value_to_string(doc),

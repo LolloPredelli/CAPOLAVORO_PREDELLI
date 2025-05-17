@@ -265,8 +265,6 @@ def find_subject(doc):
 # Return the index of the parent with a type different from 'UNSET' of a given token
 def find_head_with_type(token, type_array):
     head = token.head
-    # print("DEBUG: ", token.text)
-    # print("DEBUG: ", head.text, " -> ", type_array[head.i], " != ", head.head.text)
     while head != head.head and type_array[head.i] == 'UNSET':
         head = head.head
 
@@ -336,17 +334,17 @@ def build_elements(doc, current_index, element_array, type_array):
 # Return the elements' tree structure
 def link_elements_as_tree(doc, element_array, type_array, root_index, subject_index):
 
-    # Collega ROOT al soggetto
+    # Link ROOT to the subject
     if root_index in element_array and subject_index in element_array:
         element_array[root_index].link = element_array[subject_index]
         element_array[subject_index].add_child(element_array[root_index])
 
-    # Collega tutti gli altri elementi secondo il loro head
+    # Link all other elements according to thei head
     for i, elem in element_array.items():
         if elem.id == root_index:
-            continue  # Salta ROOT, già collegato
+            continue  # skip ROOT since it is already linked
         
-        # if it is a list element
+        # if the element is part of a list (eg: banana, apple and pear)
         if elem.dep == 'conj':
             head_index = find_list_head(doc[i], type_array)
         else:
@@ -364,13 +362,13 @@ def link_elements_as_tree(doc, element_array, type_array, root_index, subject_in
 # Return the json structure of an element tree
 def element_tree_to_json(doc, element, visited=None):
     if visited is None:
-        visited = set()  # inizializza l'insieme dei nodi visitati
+        visited = set()  # initialize visited elements set
 
-    # Se l'elemento è già stato visitato, interrompi la ricorsione
+    # If the element was already visited, then skip
     if element.id in visited:
         return {}
 
-    # Aggiungi l'elemento alla lista dei visitati
+    # Add element to visited elements set
     visited.add(element.id)
 
     return {

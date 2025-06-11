@@ -1,0 +1,91 @@
+DROP DATABASE IF EXISTS mAInd_map;
+CREATE DATABASE mAInd_map DEFAULT CHARACTER SET = utf8;
+
+USE mAInd_map;
+
+CREATE TABLE tuser (
+    id_user         BIGINT      NOT NULL        AUTO_INCREMENT,
+    fname           CHAR(50)    NOT NULL,
+    lname           CHAR(50)    NOT NULL,
+    email           CHAR(100)   NOT NULL        UNIQUE,
+    pass            CHAR(64)    NOT NULL,
+    PRIMARY KEY (id_user),
+    INDEX iuser (fname, lname),
+    CONSTRAINT chk_fname CHECK(CHAR_LENGTH(fname) >= 2),
+    CONSTRAINT chk_lname CHECK(CHAR_LENGTH(lname) >= 2)
+) ENGINE InnoDB;
+
+CREATE TABLE tmap (
+    id_map          BIGINT      NOT NULL        AUTO_INCREMENT,
+    title           VARCHAR(100) NOT NULL,
+    content         JSON         NOT NULL UNIQUE,
+    fk_user         BIGINT      NOT NULL,
+    PRIMARY KEY(id_map),
+    INDEX imap (id_map),
+    FOREIGN KEY(fk_user) REFERENCES tuser(id_user)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+--DELIMITER /
+--CREATE TRIGGER trg_fname_insert
+--BEFORE INSERT ON tuser
+--FOR EACH ROW
+--    BEGIN
+--        IF NOT NEW.fname REGEXP '^[A-Za-z}$' THEN
+--            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Name field accepts letters only';
+--        END IF;
+--    END /
+
+--CREATE TRIGGER trg_fname_update
+--BEFORE UPDATE ON tuser
+--FOR EACH ROW
+--    BEGIN
+--        IF NOT NEW.fname REGEXP '^[A-Z]{1}[a-z}$' THEN
+--            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Name field accepts letters only';
+--        END IF;
+--    END /    
+--
+--CREATE TRIGGER trg_lname_insert
+--BEFORE INSERT ON tuser
+--FOR EACH ROW
+--    BEGIN
+--        IF NOT NEW.lname REGEXP '^[A-Z]{1}[a-z}$' THEN
+--            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Name field accepts letters only';
+--        END IF;
+--    END /
+--
+--CREATE TRIGGER trg_lname_update
+--BEFORE UPDATE ON tuser
+--FOR EACH ROW
+--    BEGIN
+--        IF NOT NEW.lname REGEXP '^[A-Z]{1}[a-z}$' THEN
+--            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Name field accepts letters only';
+--        END IF;
+--    END / 
+--
+--CREATE TRIGGER trg_email_insert
+--BEFORE INSERT ON tuser
+--FOR EACH ROW
+--    BEGIN
+--        IF NOT NEW.email REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' THEN
+--            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Email not valid';
+--        END IF;
+--    END /
+--
+--CREATE TRIGGER trg_email_update
+--BEFORE UPDATE ON tuser
+--FOR EACH ROW
+--    BEGIN
+--        IF NOT NEW.email REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' THEN
+--            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Email not valid';
+--        END IF;
+--    END /           
+--DELIMITER ;
+
+
+
+INSERT INTO `tuser` (`id_user`, `fname`, `lname`, `email`, `pass`) VALUES ('1', 'Admin', 'Uno', 'admin@gmail.com', '3eb3fe66b31e3b4d10fa70b5cad49c7112294af6ae4e476a1c405155d45aa121');
+INSERT INTO `tmap` (`id_map`, `title`, `content`, `fk_user`) VALUES ('1', 'Wilde', NULL, '1');
+INSERT INTO `tmap` (`id_map`, `title`, `content`, `fk_user`) VALUES ('2', 'World War 2', NULL, '1');
+INSERT INTO `tmap` (`id_map`, `title`, `content`, `fk_user`) VALUES ('3', 'Economy', NULL, '1');

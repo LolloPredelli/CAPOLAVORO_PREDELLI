@@ -1,0 +1,111 @@
+/* new map CSS stylesheet */
+
+/* import useful stylesheets*/
+@import url(setup.css);
+
+/* tags */
+body {
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10vh;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    max-width: 80vw;
+    justify-self: center;
+}
+
+h1 {
+    color: var(--light);
+    font-size: 10vh;
+    margin-bottom: 5vh;
+    text-align: center;
+}
+
+button {
+    padding: 1.5vh 3vw 1.5vh 3vw;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 2.4vh;
+    resize: none;
+}
+
+
+
+textarea:focus {
+    outline: none;
+}
+
+/* classes */
+.account {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 1vh;
+    margin-top: 1vh;
+}
+
+/* IDs */
+#home {
+    margin-left: 3vh;
+    margin-top: 1vh;
+}
+
+#user {
+    width: 80px;
+    height: 80px;
+    background-image: url(../resources/images/user.svg);
+    background-size: cover;
+}
+
+#user:hover {
+    cursor: pointer;
+    background-image: url(../resources/images/user-hover.svg);
+}
+
+#logout {
+    color: var(--light);
+    border: solid 1px var(--light);
+    padding: 1.5vh 3vw 1.5vh 3vw;
+    background-color: transparent;
+}
+
+#logout:hover {
+    background-color: var(--primary);
+    transform: scale(1.05);
+    box-shadow: 5px 5px 10px var(--dark);
+}
+
+#input-text {
+    width: 100%;
+    height: 20vh;
+    background-color: white;
+    border-radius: 3vh;
+    display: flex;
+    flex-direction: column;
+    padding: 3vh;
+}
+
+#input-text:hover {
+    box-shadow: 0px 0px 20px var(--primary);
+}
+
+#buttons {
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    justify-content: space-between;
+}

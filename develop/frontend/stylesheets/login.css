@@ -1,0 +1,130 @@
+/* homepage CSS stylesheet */
+
+/* import useful stylesheets*/
+@import url(setup.css);
+
+/* tags' style */
+body {
+    width: 100vw;
+    height: 100vh;
+
+    background: linear-gradient(to right, black, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+        url(../resources/images/working-laptop-1.jpg);
+    background-position: center;
+    background-size: cover;
+
+
+
+    display: grid;
+    grid-template-columns: 3fr 4fr;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    color: var(--light);
+    font-size: 10vh;
+    margin-bottom: 5vh;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1vh;
+    width: 80%;
+}
+
+input {
+    width: 100%;
+    padding: 2%;
+    background-color: var(--light);
+    border: none;
+}
+
+/* classes */
+.grid-element {
+    margin: 0vw 5vw;
+    justify-items: center;
+}
+
+.red-bkg {
+    background-color: var(--error);
+}
+
+/* IDs */
+#home-btn {
+    margin-right: 1vw;
+}
+
+#card {
+    width: 80%;
+    height: 80%;
+    background-color: #e9e9e9e1;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5vh;
+}
+
+#card:hover {
+    box-shadow: 0 0 20px var(--primary);
+}
+
+#error-card {
+    width: 20vw;
+    padding: 1vh 1vw 1vh 1vw;
+    border: 2px solid var(--error);
+    color: var(--error);
+    background-color: #c83e4e60;
+    border-radius: 5px;
+}
+
+#submit {
+    width: calc(20vw + 4%);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    background-color: transparent;
+}
+
+#submit:hover {
+    cursor: pointer;
+    background-color: var(--tr-primary);
+    color: var(--light);
+}
+
+@media screen and (max-width: 900px) {
+    body {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 3vh;
+    }
+
+    button {
+        background-color: var(--tr-primary);
+        color: var(--light);
+        border: 1px solid var(--light);
+    }
+
+    button:hover {
+        background-color: transparent;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+    }
+
+    h1 {
+        margin-bottom: 2vh;
+        line-height: 100%;
+    }
+
+    #card {
+        height: unset;
+        padding: 3vh;
+    }
+
+}

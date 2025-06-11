@@ -1,0 +1,162 @@
+/* importing setup */
+@import url(setup.css);
+
+/* tags */
+h1 {
+    text-align: center;
+    color: var(--light);
+    font-size: 15vh;
+}
+
+h2 {
+    text-align: center;
+    color: var(--dark);
+    font-size: 5vh;
+}
+
+h3 {
+    text-align: center;
+    color: var(--light);
+    font-size: 3vh;
+}
+
+section {
+    display: block;
+    z-index: 1;
+    width: 100vw;
+    height: 80vh;
+    align-content: center;
+    justify-items: center;
+    background-color: var(--light);
+}
+
+/* classes */
+.black-filter-top {
+    width: 100%;
+    height: 100%;
+    background-color: #000000b0;
+}
+
+.vertical-image {
+    width: 30vw;
+    height: 65vh;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 12px;
+}
+
+/* IDs */
+#hero-image {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url(../resources/images/home.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#hero-contents {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    align-items: center;
+    justify-content: center;
+}
+
+#what-we-do {
+    max-width: 70vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5vw;
+}
+
+#what-we-do-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5vh;
+}
+
+#get-started {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background-image: url(../resources/images/office-3.jpg);
+    background-size: cover;
+    background-position-x: -500px;
+
+    padding-left: 5vw;
+}
+
+#start-button {
+    margin-top: 5vh;
+}
+
+#sign-up {
+    color: var(--light);
+    border: 1px solid var(--light);
+    margin-left: 2vw;
+}
+
+#line {
+    width: 30vw;
+    margin-left: 14vw;
+    margin-top: 3vh;
+    margin-bottom: -1vh;
+    border-top: 5px solid var(--primary);
+}
+
+#create {
+    text-align: start;
+}
+
+@media screen and (max-width: 878px) {
+    h1 {
+        font-size: 10vh;
+    }
+
+    h3 {
+        font-size: 2vh;
+    }
+
+    .vertical-image {
+        width: 80vw;
+        height: 30vh;
+    }
+
+    #what-we-do {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    h1 {
+        font-size: 20vw;
+    }
+
+    h3 {
+        font-size: 5vw;
+    }
+
+    .vertical-image {
+        width: 80vw;
+        height: 30vh;
+    }
+
+    #what-we-do {
+        flex-direction: column;
+    }
+}

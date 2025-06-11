@@ -1,0 +1,129 @@
+/* import files */
+@import url(setup.css);
+
+/* tags */
+body {
+    background-color: var(--dark);
+    color: var(--light);
+    justify-items: center;
+}
+
+header {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+button {
+    background-color: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    padding: 2vh 4vw;
+    margin: 2vh;
+}
+
+#logout:hover,
+button:hover {
+    background-color: var(--primary);
+    color: var(--light);
+    border: 1px solid var(--light);
+}
+
+h1 {
+    font-size: 6vh;
+    text-align: center;
+}
+
+input {
+    width: 45vw;
+    padding: 1vh;
+    border-radius: 10px;
+    border: none;
+}
+
+input:hover {
+    box-shadow: 0 0 10px var(--primary);
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--dark);
+}
+
+input[type=submit] {
+    background-color: var(--primary);
+    color: var(--light);
+    width: 49%;
+    border-radius: 10px;
+}
+
+input[type=submit]:hover {
+    box-shadow: 0 0 10px var(--dark);
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--dark);
+}
+
+
+
+
+
+/* classes */
+.left-border {
+    border-left: 3px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    padding: 0 2vh 0 2vh;
+}
+
+
+
+
+/* IDs */
+#title {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+#change-info {
+    max-width: 1000px;
+    padding: 6vh 4vh;
+    border-radius: 20px;
+    background-color: var(--light);
+    color: var(--dark);
+    display: flex;
+    flex-direction: column;
+    gap: 8vh;
+}
+
+#change-info:hover {
+    box-shadow: 0 0 10px var(--primary);
+}
+
+#buttons {
+    width: calc(45vw + 4vh);
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+}
+
+#user {
+    align-self: center;
+    width: 10vw;
+    height: 10vw;
+    background-image: url(../resources/images/user.svg);
+    background-size: cover;
+}
+
+#logout {
+    background-color: transparent;
+    color: var(--light);
+    border: 1px solid var(--light);
+    padding: 2vh 4vw;
+    margin: 2vh;
+    width: unset;
+    border-radius: 0;
+}

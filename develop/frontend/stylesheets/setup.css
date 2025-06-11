@@ -1,0 +1,119 @@
+/* reset and setup CSS stylesheet */
+
+/* importing font stylesheet */
+@import url('https://fonts.cdnfonts.com/css/tt-ramillas-trl');
+
+/* reset */
+* {
+    margin: 0%;
+    padding: 0%;
+    font-family: 'TT Ramillas Trl', sans-serif;
+}
+
+/* palette CSS stylesheet */
+:root {
+    --primary: #a9b232;
+    --tr-primary: #a9b232d5;
+    --light: #fbf7f4;
+    --tr-light: #fbf7f4b4;
+    --dark: #495159;
+    --tr-dark: #495159d5;
+    --error: #C83E4D;
+    --tr-error: #c83e4ec0;
+    --success: #19647e;
+    --tr-success: #19647ec0;
+}
+
+/* setup */
+body {
+    background-color: var(--light);
+    color: var(--dark);
+    overflow-x: hidden;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+button {
+    padding: 2.5vh 6vw 2.5vh 6vw;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    background-color: transparent;
+}
+
+button:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 5px 5px 10px var(--dark);
+    color: var(--light);
+    border: 1px solid var(--light);
+    background-color: var(--tr-primary);
+}
+
+input[type=submit]:hover {
+    cursor: pointer;
+}
+
+input:hover {
+    box-shadow: 0 0 10px var(--primary);
+}
+
+input:disabled {
+    box-shadow: 0 0 0px var(--primary);
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--dark);
+}
+
+.hidden {
+    display: none;
+}
+
+.mouse-shadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--tr-primary);
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 40px 40px var(--tr-primary);
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+
+
+.error-card {
+    padding: 1vh 3vh;
+    background-color: var(--tr-error);
+    color: var(--light);
+    border-radius: 3vh;
+}
+
+.success-card {
+    padding: 1vh 3vh;
+    background-color: var(--tr-success);
+    color: var(--light);
+    border-radius: 3vh;
+}
+
+#message-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    gap: 1vh;
+    justify-items: center;
+    align-content: center;
+}
+
+@media screen and (max-width: 1275px) {
+    .mouse-shadow {
+        display: none;
+    }
+}

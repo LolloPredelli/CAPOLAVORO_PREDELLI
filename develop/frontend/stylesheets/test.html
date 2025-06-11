@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Test page</title>
+    <link rel="stylesheet" href="stylesheets/show_map.css">
+</head>
+
+<div id="spanContainer" style="position: relative; width: 1000px; height: 800px;">
+    <svg id="svgContainer" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0;"></svg>
+    <div id="result" style="display: none;"></div>
+    <span id="span-title" style="position: absolute;"></span>
+</div>
+
+<script>
+    console.log("js");
+
+    // Riferimenti al DOM
+    const container = document.getElementById('spanContainer');
+    const addButton = document.getElementById('add-button');
+    const spanTitle = document.getElementById('span-title');
+    const svgContainer = document.getElementById('svgContainer');
+
+    // Connessioni per linee dinamiche
+    const connections = [];
+
+    window.onload = () => {
+        spanTitle.style.left = container.offsetWidth / 2 + "px";
+        spanTitle.style.top = container.offsetHeight / 2 + "px";
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchAndShowJSON();
+    });
+
+    async function fetchAndShowJSON() {
+        try {
+            const JSONString = document.getElementById('result').innerText;
+            const JSONFile = JSON.parse(JSONString);
+            showJSON(JSONFile);
+        } catch (error) {
+            console.error("Unable to fetch data:", error);
+        }
+    }
+
+    function showJSON(file) {
+        if (file.value) {
+            spanTitle.innerHTML = `<h1>${file.value}</h1>`;
+        } else {
+            spanTitle.innerHTML = "<h1>No Title</h1>";
+        }
+
+        const angle_step = findAngle(file.children.length);
+        const centerX = container.offsetWidth / 2;
+        const centerY = container.offsetHeight / 2;
+        const initial_distance = 200;
+
+        let angle = angle_step;
+        for (let i = 0; i < file.children.length; i++) {
+            buildBranch(centerX, centerY, angle, initial_distance, file.children[i], angle);
+            angle += angle_step;
+        }
+
+        drawAllConnections();
+    }
+
+    function buildBranch(parentX, parentY, angle, distance, element, parent_type) {
+        if (!element || !element.value) return;
+
+        let x = 0, y = 0;
+
+        if (parent_type === 'LINK' || element.type === 'LINK') {
+            x = findXCatet(angle, distance / 2);
+            y = findYCatet(angle, distance / 2);
+        } else {
+            x = findXCatet(angle, distance);
+            y = findYCatet(angle, distance);
+        }
+
+        const spanX = parentX + x;
+        const spanY = parentY + y;
+
+        const span = document.createElement('span');
+        span.innerHTML = `<p>${element.value}</p>`;
+        span.classList.add('span-item');
+        span.classList.add(element.type);
+        container.appendChild(span);
+
+        span.style.left = spanX + "px";
+        span.style.top = spanY + "px";
+
+        makeDraggable(span);
+
+        // Salva connessione
+        connections.push({
+            from: { el: null, x: parentX, y: parentY },
+            to: { el: span }
+        });
+
+        if (Array.isArray(element.children)) {
+            const count = element.children.length;
+            if (count === 1) {
+                buildBranch(spanX, spanY, angle, distance * 0.95, element.children[0]);
+            } else {
+                const spread = degrees2radians(180);
+                const baseAngle = angle - spread / 2;
+                const angleStep = spread / count;
+                element.children.forEach((child, index) => {
+                    const nextAngle = baseAngle + index * angleStep;
+                    buildBranch(spanX, spanY, nextAngle, distance * 0.95, child);
+                });
+            }
+        }
+    }
+
+    function makeDraggable(el) {
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        el.addEventListener('mousedown', function (e) {
+            isDragging = true;
+            offsetX = e.clientX - el.offsetLeft;
+            offsetY = e.clientY - el.offsetTop;
+            el.style.cursor = 'grabbing';
+            el.style.zIndex = 1000;
+        });
+
+        document.addEventListener('mousemove', function (e) {
+            if (isDragging) {
+                el.style.left = (e.clientX - offsetX) + 'px';
+                el.style.top = (e.clientY - offsetY) + 'px';
+                drawAllConnections();
+            }
+        });
+
+        document.addEventListener('mouseup', function () {
+            if (isDragging) {
+                isDragging = false;
+                el.style.cursor = 'grab';
+            }
+        });
+
+        el.style.cursor = 'grab';
+    }
+
+    function drawAllConnections() {
+        svgContainer.innerHTML = '';
+
+        connections.forEach(conn => {
+            const fromX = conn.from.el ? getCenterX(conn.from.el) : conn.from.x;
+            const fromY = conn.from.el ? getCenterY(conn.from.el) : conn.from.y;
+            const toX = getCenterX(conn.to.el);
+            const toY = getCenterY(conn.to.el);
+
+            drawLine(fromX, fromY, toX, toY);
+        });
+    }
+
+    function drawLine(x1, y1, x2, y2) {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", x1);
+        line.setAttribute("y1", y1);
+        line.setAttribute("x2", x2);
+        line.setAttribute("y2", y2);
+        line.setAttribute("stroke", "black");
+        line.setAttribute("stroke-width", "2");
+        svgContainer.appendChild(line);
+    }
+
+    function getCenterX(el) {
+        return el.offsetLeft + el.offsetWidth / 2;
+    }
+
+    function getCenterY(el) {
+        return el.offsetTop + el.offsetHeight / 2;
+    }
+
+    function findAngle(nElements) {
+        let degreeAngle = 360 / nElements;
+        return degrees2radians(degreeAngle);
+    }
+
+    function degrees2radians(degreesAngle) {
+        return degreesAngle * Math.PI / 180;
+    }
+
+    function radians2degrees(radiansAngle) {
+        return radiansAngle / Math.PI * 180;
+    }
+
+    function findXCatet(angle, hypotenuse) {
+        return Math.round(hypotenuse * Math.cos(angle));
+    }
+
+    function findYCatet(angle, hypotenuse) {
+        return Math.round(hypotenuse * Math.sin(angle));
+    }
+
+</script>
+
+</html>

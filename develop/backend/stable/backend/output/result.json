@@ -1,0 +1,240 @@
+{
+    "id": -1,
+    "type": "TITLE",
+    "dep": "",
+    "link": "",
+    "value": "50 states",
+    "coordinates": [
+        0,
+        0
+    ],
+    "children": [
+        {
+            "id": 543,
+            "type": "BLOCK",
+            "value": "possesses ",
+            "link": null,
+            "dep": "ROOT",
+            "coordinates": [
+                0,
+                0
+            ],
+            "children": [
+                {
+                    "id": 544,
+                    "type": "LINK",
+                    "value": "by ",
+                    "link": 543,
+                    "dep": "prep",
+                    "coordinates": [
+                        0,
+                        0
+                    ],
+                    "children": [
+                        {
+                            "id": 545,
+                            "type": "BLOCK",
+                            "value": "far ",
+                            "link": 544,
+                            "dep": "pcomp",
+                            "coordinates": [
+                                0,
+                                0
+                            ],
+                            "children": []
+                        },
+                        {
+                            "id": 548,
+                            "type": "BLOCK",
+                            "value": "the largest amount ",
+                            "link": 544,
+                            "dep": "pobj",
+                            "coordinates": [
+                                0,
+                                0
+                            ],
+                            "children": [
+                                {
+                                    "id": 549,
+                                    "type": "LINK",
+                                    "value": "of ",
+                                    "link": 548,
+                                    "dep": "prep",
+                                    "coordinates": [
+                                        0,
+                                        0
+                                    ],
+                                    "children": [
+                                        {
+                                            "id": 550,
+                                            "type": "BLOCK",
+                                            "value": "wealth ",
+                                            "link": 549,
+                                            "dep": "pobj",
+                                            "coordinates": [
+                                                0,
+                                                0
+                                            ],
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 551,
+                                    "type": "LINK",
+                                    "value": "of ",
+                                    "link": 548,
+                                    "dep": "prep",
+                                    "coordinates": [
+                                        0,
+                                        0
+                                    ],
+                                    "children": [
+                                        {
+                                            "id": 553,
+                                            "type": "BLOCK",
+                                            "value": "any country ",
+                                            "link": 551,
+                                            "dep": "pobj",
+                                            "coordinates": [
+                                                0,
+                                                0
+                                            ],
+                                            "children": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": 561,
+                            "type": "BLOCK",
+                            "value": "the highest disposable household income ",
+                            "link": 544,
+                            "dep": "conj",
+                            "coordinates": [
+                                0,
+                                0
+                            ],
+                            "children": [
+                                {
+                                    "id": 562,
+                                    "type": "LINK",
+                                    "value": "per ",
+                                    "link": 561,
+                                    "dep": "prep",
+                                    "coordinates": [
+                                        0,
+                                        0
+                                    ],
+                                    "children": [
+                                        {
+                                            "id": 563,
+                                            "type": "BLOCK",
+                                            "value": "capita ",
+                                            "link": 562,
+                                            "dep": "pobj",
+                                            "coordinates": [
+                                                0,
+                                                0
+                                            ],
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 564,
+                                    "type": "LINK",
+                                    "value": "among ",
+                                    "link": 561,
+                                    "dep": "prep",
+                                    "coordinates": [
+                                        0,
+                                        0
+                                    ],
+                                    "children": [
+                                        {
+                                            "id": 566,
+                                            "type": "BLOCK",
+                                            "value": "OECD countries ",
+                                            "link": 564,
+                                            "dep": "pobj",
+                                            "coordinates": [
+                                                0,
+                                                0
+                                            ],
+                                            "children": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 569,
+                    "type": "BLOCK",
+                    "value": "has ",
+                    "link": 543,
+                    "dep": "conj",
+                    "coordinates": [
+                        0,
+                        0
+                    ],
+                    "children": [
+                        {
+                            "id": 571,
+                            "type": "BLOCK",
+                            "value": "high levels ",
+                            "link": 569,
+                            "dep": "dobj",
+                            "coordinates": [
+                                0,
+                                0
+                            ],
+                            "children": [
+                                {
+                                    "id": 572,
+                                    "type": "LINK",
+                                    "value": "of ",
+                                    "link": 571,
+                                    "dep": "prep",
+                                    "coordinates": [
+                                        0,
+                                        0
+                                    ],
+                                    "children": [
+                                        {
+                                            "id": 573,
+                                            "type": "BLOCK",
+                                            "value": "wealth ",
+                                            "link": 572,
+                                            "dep": "pobj",
+                                            "coordinates": [
+                                                0,
+                                                0
+                                            ],
+                                            "children": []
+                                        },
+                                        {
+                                            "id": 576,
+                                            "type": "BLOCK",
+                                            "value": "income inequality ",
+                                            "link": 572,
+                                            "dep": "conj",
+                                            "coordinates": [
+                                                0,
+                                                0
+                                            ],
+                                            "children": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
